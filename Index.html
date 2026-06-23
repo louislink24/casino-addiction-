@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎰 Casino Addiction™ 🎰</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #000;
+    color: #fff;
+    margin: 0;
+}
+
+h1 {
+    color: #ff0;
+    margin-top: 20px;
+}
+
+.tm {
+    cursor: pointer;
+}
+
+#money {
+    font-size: 24px;
+    margin: 20px;
+}
+
+#reels {
+    font-size: 60px;
+    margin: 30px;
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 15px;
+    margin: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #ff0;
+    font-weight: bold;
+}
+
+button:hover {
+    background: orange;
+}
+</style>
+</head>
+
+<body>
+
+<h1>
+🎰 Casino Addiction
+<span class="tm" onclick="goRickroll()">™</span>
+</h1>
+
+<div id="money">💰 Argent : 100€</div>
+<div id="reels">🎲 🎲 🎲 🎲</div>
+
+<!-- BOUTONS MISE -->
+<button onclick="spin(1)">Miser 1€</button>
+<button onclick="spin(5)">Miser 5€</button>
+<button onclick="spin(10)">Miser 10€</button>
+<button onclick="spin(100)">Miser 100€</button>
+<button onclick="allIn()">🔥 Tout miser</button>
+
+<script>
+
+let money = 100;
+
+const symbols = ["🍒","🍋","🔔","💎","7️⃣","6️⃣"];
+
+const moneyDiv = document.getElementById("money");
+const reelsDiv = document.getElementById("reels");
+
+function updateMoney() {
+    moneyDiv.textContent = "💰 Argent : " + money + "€";
+}
+
+function randomSymbol() {
+    return symbols[Math.floor(Math.random() * symbols.length)];
+}
+
+function spin(bet) {
+
+    if (money <= 0) return;
+
+    bet = Math.min(bet, money);
+    money -= bet;
+
+    const result = [randomSymbol(), randomSymbol(), randomSymbol(), randomSymbol()];
+
+    reelsDiv.textContent = result.join(" ");
+
+    // 🎰 logique normale
+    if (result.every(s => s === result[0])) {
+        money += bet * 5;
+    } 
+    else if (
+        result[0] === result[1] ||
+        result[1] === result[2] ||
+        result[2] === result[3]
+    ) {
+        money += bet * 2;
+    }
+
+    updateMoney();
+}
+
+function allIn() {
+    if (money <= 0) return;
+
+    const bet = money;
+
+    money -= bet;
+
+    // 💀 combo spécial
+    const result = ["6️⃣","7️⃣","6️⃣","7️⃣"];
+    reelsDiv.textContent = result.join(" ");
+
+    money += bet * 100;
+
+    updateMoney();
+}
+
+function goRickroll() {
+    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+}
+
+updateMoney();
+
+</script>
+
+</body>
+  </html>
